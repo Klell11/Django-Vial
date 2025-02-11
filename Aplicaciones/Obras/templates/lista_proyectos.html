@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Proyectos</title>
+    <!-- Agregar enlace a Bootstrap 5 (sin atributo integrity) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Lista de Proyectos</h1>
+
+        <!-- Mostrar los proyectos en una tabla -->
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Contratista</th>
+                    <th>Presupuesto</th>
+                    <th>Carretera</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for proyecto in proyectos %}
+                    <tr>
+                        <td>{{ proyecto.nombre }}</td>
+                        <td>{{ proyecto.constructora.nombre }}</td>
+                        <td>{{ proyecto.presupuesto.monto }}</td>
+                        <td>{{ proyecto.carretera.nombre }}</td>
+                        <td>{{ proyecto.fecha_inicio }}</td>
+                        <td>{{ proyecto.fecha_fin }}</td>
+                        <td>
+                            <a href="{% url 'editar_proyecto' proyecto.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="{% url 'eliminar_proyecto' proyecto.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <a href="{% url 'index' %}" class="btn btn-secondary">Volver al Inicio</a>
+    </div>
+        </table>
+
+        <h2 class="mt-5">Crear Proyecto</h2>
+        <form action="{% url 'crear_proyecto' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="constructora" class="form-label">Contratista (Constructora):</label>
+                <select name="constructora" id="constructora" class="form-select" required>
+                    <option value="">-- Seleccionar --</option>
+                    {% for constructora in constructoras %}
+                        <option value="{{ constructora.id }}">{{ constructora.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="presupuesto" class="form-label">Presupuesto:</label>
+                <select name="presupuesto" id="presupuesto" class="form-select" required>
+                    <option value="">-- Seleccionar --</option>
+                    {% for presupuesto in presupuestos %}
+                        <option value="{{ presupuesto.id }}">{{ presupuesto.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="carretera" class="form-label">Carretera:</label>
+                <select name="carretera" id="carretera" class="form-select" required>
+                    <option value="">-- Seleccionar --</option>
+                    {% for carretera in carreteras %}
+                        <option value="{{ carretera.id }}">{{ carretera.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="fecha_inicio" class="form-label">Fecha Inicio:</label>
+                <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="fecha_fin" class="form-label">Fecha Fin:</label>
+                <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Crear Proyecto</button>
+        </form>
+        
+    </div>
+
+    <!-- Agregar Bootstrap JS (sin atributo integrity) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

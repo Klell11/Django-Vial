@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vi-&j7iz^s_rq$f$u3u8j&#u#9h6w6$u93o4bq)#j6#%6n0i84'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -52,10 +52,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Ejercicio.urls'
 
+# settings.py
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'C:/Users/yo_jj/OneDrive/Escritorio/final/Ejercicio/templates',
+            'C:/Users/yo_jj/OneDrive/Escritorio/final/Ejercicio/Aplicaciones/Obras/templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,6 +72,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
 
 WSGI_APPLICATION = 'Ejercicio.wsgi.application'
 
@@ -116,7 +124,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Asegúrate de que esta ruta sea correcta
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

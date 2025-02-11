@@ -1,0 +1,25 @@
+# Archivos compilados de Python
+*.pyc
+__pycache__/
+
+# Entornos virtuales
+.env
+venv/
+env/
+*.env
+
+
+# Archivos estáticos y media generados
+/staticfiles/
+/media/
+
+# Configuración de IDEs
+.idea/
+.vscode/
+
+# Archivos de registro
+*.log
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Presupuesto</title>
+    <!-- Agregar enlace a Bootstrap 5 (sin el atributo integrity) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f9;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .btn-submit {
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        .message-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .message-list li {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Crear Nuevo Presupuesto</h2>
+
+        <!-- Mostrar mensajes de error o éxito -->
+        {% if messages %}
+            <ul class="message-list">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre del Presupuesto:</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="monto" class="form-label">Monto:</label>
+                <input type="number" name="monto" id="monto" step="0.01" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha:</label>
+                <input type="date" name="fecha" id="fecha" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción:</label>
+                <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Crear Presupuesto</button>
+        </form>
+
+        <a href="{% url 'listar_presupuestos' %}" class="back-link">Volver al Listado</a>
+    </div>
+
+    <!-- Agregar Bootstrap JS (sin el atributo integrity) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
