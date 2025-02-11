@@ -1,0 +1,344 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Resultados</title>
+
+    
+    <!-- importando jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        
+    <!--Importando izitoast-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+        integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
+        integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- importando jquery validate -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+
+    <link rel="icon" href="{% static 'plantilla/assets/img/kaiadmin/favicon.png' %}" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'plantilla/assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["{%static 'plnatilla/assets/css/fonts.min.css' %}"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'plantilla/assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'plantilla/assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'plantilla/assets/css/kaiadmin.min.css' %}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{% static 'plantilla/assets/css/demo.css' %}" />
+
+    <!-- Importamos Data Table -->
+    <link rel="stylesheet" href="//cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
+    <script src="//cdn.datatables.net/2.2.1/js/dataTables.min.js"></script>
+
+    <!--Importando fileInput.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.4/js/fileinput.min.js" integrity="sha512-0wQvB58Ha5coWmcgtg4f11CTSSxfrfLClUp9Vy0qhzYzCZDSnoB4Vhu5JXJFs7rU24LE6JsH+6hpP7vQ22lk5w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.4/css/fileinput.min.css" integrity="sha512-yDVMONIXJPPAoULZ92Ygngsn8ZUGB4ejm6fCc6q9ZvdH8blFAOgg75XZSEaAJ5m4E/yPI1BAi5fF2axMHVuZ5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.1/js/locales/es.min.js"></script>
+    <!-- Botones para exportar -->
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>
+</head>
+
+
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar" data-background-color="dark">
+            <div class="sidebar-logo">
+                <!-- Logo Header -->
+                <div class="logo-header" data-background-color="dark">
+                    <a href="/" class="logo">
+                        <img src="{% static 'plantilla/assets/img/kaiadmin/logo_light.svg' %}" alt="navbar brand" class="navbar-brand"
+                            height="20" />
+                    </a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar">
+                            <i class="gg-menu-right"></i>
+                        </button>
+                        <button class="btn btn-toggle sidenav-toggler">
+                            <i class="gg-menu-left"></i>
+                        </button>
+                    </div>
+                    <button class="topbar-toggler more">
+                        <i class="gg-more-vertical-alt"></i>
+                    </button>
+                </div>
+                <!-- End Logo Header -->
+            </div>
+            <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                <div class="sidebar-content">
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item active">
+                            <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+                                <i class="fas fa-home"></i>
+                                <p>Menú</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="dashboard">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="/">
+                                            <span class="sub-item">Inicio</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-section">
+                            <span class="sidebar-mini-icon">
+                                <i class="fa fa-ellipsis-h"></i>
+                            </span>
+                            <h4 class="text-section">Intereses</h4>
+                        </li>
+
+                        <!-- menu de Reparaciones-->
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#base">
+                                <i class="fas fa-layer-group"></i>
+                                <p>Robots</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="base">
+                                <ul class="nav nav-collapse">
+                                    <!--Sube menu de Reparaciones-->
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Crear Robot</span>
+                                        </a>
+                                        
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Listado de Robot</span>
+                                        </a>
+                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                                <i class="fas fa-th-list"></i>
+                                <p>Desafios</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="sidebarLayouts">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Crear Desafio</span>
+                                        </a>
+                                        
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Lista de Desafios</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#score">
+                                <i class="fas fa-th-list"></i>
+                                <p>Puntaje</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="score">
+                                <ul class="nav nav-collapse">
+                                    
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Crear  Puntuacion</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Listado de Puntuaciones</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#forms">
+                                <i class="fas fa-th-list"></i>
+                                <p>Quejas & Sugerencia</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="forms">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Crear Queja</span>
+                                        </a>
+                                        
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Listado de Quejas</span>
+                                        </a>
+                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#contrac">
+                                <i class="fas fa-th-list"></i>
+                                <p>Contratos</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="contrac">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Crear Contrato</span>
+                                        </a>
+                                        
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'listar_proyectos' %}">
+                                            <span class="sub-item">Listado de Contratos</span>
+                                        </a>
+                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-fill ms-auto p-4" style="max-width: calc(100% - 250px);">
+            {% block contenido %}
+
+            {% endblock %}
+            
+        </div>
+    </div>
+    <br>
+    <div style="text-align: center;">
+        <td cl><h3>Desarrollado por:Josue Baldeon &copy;</h3></td>
+        <br>
+        2024
+        <br>
+        <br>
+    </div>
+
+    <!--Verificando y mostrando mensajes de confirmación-->
+    {% if messages %}
+    {% for mensajeConfirmacion in messages %}
+    <script>
+        if ("{{mensajeConfirmacion.tags}}"
+            == "success") {
+            //  alert(":D) - {{mensajeConfirmacion}}")};
+            iziToast.success({
+                title: 'Confirmacion',
+                message: '{{mensajeConfirmacion}}',
+                position: 'topRight'
+            });
+        }
+    </script>
+    {% endfor %}
+    {% endif %}
+    <style>
+        label.error {
+            color: red;
+            font-weight: bold;
+        }
+
+        input.error {
+            border: 1px solid red;
+        }
+    </style>
+
+    <script>
+        jQuery.validator.addMethod("letras", function (value, element) {
+            return this.optional(element) || /^[A-Za-zÁÉÍÓÚÑáéíóúñ ]*$/.test(value);
+
+        }, "Este campo solo acepta letras"); 
+    </script>
+
+
+    <!--   Core JS Files   -->
+    <script src="{% static 'plantilla/assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'plantilla/assets/js/core/popper.min.js' %}"></script>
+    <script src="{% static 'plantilla/assets/js/core/bootstrap.min.js' %}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="{% static 'plantilla/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+
+    <!-- Chart JS -->
+    <script src="{% static 'plantilla/assets/js/plugin/chart.js/chart.min.js' %}"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="{% static 'plantilla/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+
+    <!-- Chart Circle -->
+    <script src="{% static 'plantilla/assets/js/plugin/chart-circle/circles.min.js' %}"></script>
+
+    <!-- Datatables -->
+    <script src="{% static 'plantilla/assets/js/plugin/datatables/datatables.min.js' %}"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="{% static 'plantilla/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="{% static 'plantilla/assets/js/plugin/jsvectormap/jsvectormap.min.js' %}"></script>
+    <script src="{% static 'plantilla/assets/js/plugin/jsvectormap/world.js' %}"></script>
+
+    <!-- Sweet Alert -->
+    <script src="{% static 'plantilla/assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="{% static 'plantilla/assets/js/kaiadmin.min.js' %}"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="{% static 'plantilla/assets/js/setting-demo.js' %}"></script>
+    
+</body>
+
+</html>
