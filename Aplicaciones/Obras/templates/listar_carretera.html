@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Carreteras</title>
+</head>
+<body>
+    <h2>Listado de Carreteras</h2>
+    <a href="{% url 'crear_carretera' %}">Crear Carretera</a>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Ubicación</th>
+                <th>Longitud (km)</th>
+                <th>Fecha Fin Estimada</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for carretera in carreteras %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ carretera.nombre }}</td>
+                    <td>{{ carretera.ubicacion }}</td>
+                    <td>{{ carretera.longitud }}</td>
+                    <td>{{ carretera.fecha_fin_estimada }}</td>
+                    <td>
+                        <a href="{% url 'editar_carretera' carretera.pk %}">Editar</a>
+                        <a href="{% url 'eliminar_carretera' carretera.pk %}">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

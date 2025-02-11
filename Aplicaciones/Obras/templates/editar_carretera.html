@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Carretera</title>
+</head>
+<body>
+    <h2>Editar Carretera</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" value="{{ carretera.nombre }}" required><br>
+
+        <label for="ubicacion">Ubicación:</label>
+        <input type="text" name="ubicacion" id="ubicacion" value="{{ carretera.ubicacion }}" required><br>
+
+        <label for="longitud">Longitud (km):</label>
+        <input type="number" name="longitud" id="longitud" value="{{ carretera.longitud }}" required><br>
+
+        <label for="fecha_fin_estimada">Fecha Fin Estimada:</label>
+        <input type="date" name="fecha_fin_estimada" id="fecha_fin_estimada" value="{{ carretera.fecha_fin_estimada }}" required><br>
+
+        <button type="submit">Actualizar</button>
+    </form>
+</body>
+</html>
